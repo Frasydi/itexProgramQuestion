@@ -4,6 +4,7 @@ import apifetch from "../../util/axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
+import { CodeiumEditor } from "@codeium/react-code-editor";
 
 export default function EditSoal() {
     const [codeAwal, setCodeAwal] = useState("")
@@ -14,11 +15,11 @@ export default function EditSoal() {
     const [error, setError] = useState<boolean | null>(null)
 
     const params = useParams()
-    const [data, loading, error2, refetch] = useFetch<any>("/admin/soal/"+params.id)
+    const [data, loading, error2, refetch] = useFetch<any>("/admin/soal/" + params.id)
     const nav = useNavigate()
 
     useEffect(() => {
-        if(data == null) return
+        if (data == null) return
         setCodeAwal(data.codeAwal)
         setCodeAkhir(data.codePenentu)
         setNamaSoal(data.nama)
@@ -31,11 +32,11 @@ export default function EditSoal() {
         if (namaSoal.length == 0) return
         if (soalMaker.length == 0) return
         try {
-            const feting = await apifetch.put("/admin/soal/"+params.id, {
-                nama : namaSoal,
-                soal : soalMaker,
-                codeAwal : codeAwal,
-                codePenentu : codeAkhir
+            const feting = await apifetch.put("/admin/soal/" + params.id, {
+                nama: namaSoal,
+                soal: soalMaker,
+                codeAwal: codeAwal,
+                codePenentu: codeAkhir
             })
 
             if (feting.status >= 400) {
@@ -79,7 +80,7 @@ export default function EditSoal() {
             if (feting.data.stderr.length > 0) {
                 setError(true)
                 console.log(feting.data.stderr)
-                setStdOut(feting.data.stdout+"\n"+feting.data.stderr)
+                setStdOut(feting.data.stdout + "\n" + feting.data.stderr)
 
             } else {
                 setError(false)
@@ -114,17 +115,16 @@ export default function EditSoal() {
             </FormControl>
             <FormControl>
                 <FormLabel>Program Panitia</FormLabel>
-                <Textarea style={{
-                    marginTop: 20,
-                    marginBottom: 20
-                }} minHeight={500} value={codeAwal} onChange={(ev) => setCodeAwal(ev.target.value)} placeholder='Program Untuk Penginputan Data Dan Pengecekan' />
+                <CodeiumEditor value={codeAwal} onChange={(ev) => {
+                    setCodeAwal(ev || "")
+                }} height={"80vh"} language="java" theme="vs-dark" />
             </FormControl>
             <FormControl>
                 <FormLabel>Program Untuk Peserta</FormLabel>
-                <Textarea style={{
-                    marginTop: 20,
-                    marginBottom: 20
-                }} minHeight={500} value={codeAkhir} onChange={(ev) => setCodeAkhir(ev.target.value)} placeholder='Program Awal Untuk Peserta' />
+
+                <CodeiumEditor value={codeAkhir} onChange={(ev) => {
+                    setCodeAkhir(ev || "")
+                }} height={"80vh"} language="java" theme="vs-dark" />
             </FormControl>
             <Button onClick={() => { coding() }} >Jalankan</Button>
             <Textarea value={stdOut} disabled color={error ? "red" : "green"} />

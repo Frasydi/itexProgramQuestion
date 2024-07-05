@@ -3,6 +3,7 @@ import { useState } from "react";
 import apifetch from "../../util/axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { CodeiumEditor } from "@codeium/react-code-editor";
 
 export default function CreateSoal() {
     const [codeAwal, setCodeAwal] = useState("")
@@ -101,17 +102,16 @@ export default function CreateSoal() {
             </FormControl>
             <FormControl>
                 <FormLabel>Program Panitia</FormLabel>
-                <Textarea style={{
-                    marginTop: 20,
-                    marginBottom: 20
-                }} minHeight={500} value={codeAwal} onChange={(ev) => setCodeAwal(ev.target.value)} placeholder='Program Untuk Penginputan Data Dan Pengecekan' />
+                <CodeiumEditor value={codeAwal} onChange={(ev) => {
+                    setCodeAwal(ev || "")
+                }} height={"80vh"} language="java" theme="vs-dark" />
             </FormControl>
             <FormControl>
                 <FormLabel>Program Untuk Peserta</FormLabel>
-                <Textarea style={{
-                    marginTop: 20,
-                    marginBottom: 20
-                }} minHeight={500} value={codeAkhir} onChange={(ev) => setCodeAkhir(ev.target.value)} placeholder='Program Awal Untuk Peserta' />
+
+                <CodeiumEditor value={codeAkhir} onChange={(ev) => {
+                    setCodeAkhir(ev || "")
+                }} height={"80vh"} language="java" theme="vs-dark" />
             </FormControl>
             <Button onClick={() => { coding() }} >Jalankan</Button>
             <Textarea value={stdOut} disabled color={error ? "red" : "green"} />

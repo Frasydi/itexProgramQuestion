@@ -35,8 +35,8 @@ model Jawaban {
   code String @db.LongText()
   waktu String @db.MediumText()
   memori Float 
-  soal Soal @relation(fields: [soalId], references: [id], map: "soalrel")
-  user User @relation(fields: [userId], references: [id], map: "soaluser")
+  soal Soal @relation(fields: [soalId], references: [id], map: "soalrel", onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], map: "soaluser", onDelete: Cascade)
 
   @@unique([userId, soalId])
   

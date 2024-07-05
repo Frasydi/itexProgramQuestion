@@ -14,6 +14,7 @@ import {
     AlertDialogOverlay,
     AlertDialogCloseButton,
 } from '@chakra-ui/react'
+import { CodeiumEditor } from "@codeium/react-code-editor"
 
 export default function LihatJawaban() {
     const params = useParams()
@@ -81,10 +82,10 @@ export default function LihatJawaban() {
                     <h3 style={{
                         fontSize: 15
                     }}>Kode Panitia</h3>
-                    <TextArea style={{
-                        minHeight: "40vh",
-                        resize: "block"
-                    }} value={data.codeAwal} disabled />
+                    <CodeiumEditor options={{
+                        readOnly: true
+                    }} value={data.codeAwal} height={"80vh"} language="java" theme="vs-dark" />
+
                     <h3 style={{
                         fontSize: 20,
                         marginTop: "10vh"
@@ -94,10 +95,10 @@ export default function LihatJawaban() {
                             <h3 style={{
                                 fontSize: 15,
                             }}>Dari {el.user.username}</h3>
-                            <TextArea style={{
-                                minHeight: "70vh",
-                                resize: "block"
-                            }} value={el.code} disabled />
+                            <CodeiumEditor options={{
+                                readOnly: true
+                            }} value={el.code} height={"70vh"} language="java" theme="vs-dark" />
+
                             <Button isLoading={loading} onClick={() => {
                                 coding(el.code)
                             }}>Jalankan</Button>
@@ -134,7 +135,7 @@ export default function LihatJawaban() {
                             <h3 style={{
                                 fontSize: 15
                             }}>Memori : {memory}KB</h3>
-                            
+
                         </AlertDialogBody>
 
                         <AlertDialogFooter>

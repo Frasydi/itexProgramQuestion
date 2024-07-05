@@ -6,6 +6,7 @@ import TextArea from "antd/es/input/TextArea"
 import { Button, Textarea } from "@chakra-ui/react"
 import apifetch from "../../util/axios"
 import Swal from "sweetalert2"
+import { CodeiumEditor } from "@codeium/react-code-editor";
 
 export default function JawabSoal() {
     const params = useParams()
@@ -120,12 +121,10 @@ export default function JawabSoal() {
                         display: "flex",
                         flexDirection: "column"
                     }}>
-                        <Textarea style={{
-                            minHeight: "80vh",
-                            resize: "block"
-                        }} value={code} onChange={(ev) => {
-                            setCode(ev.target.value)
-                        }} />
+                         <CodeiumEditor value={code} onChange={(ev) => {
+                            setCode(ev || "")
+                        }} height={"80vh"} language="java" theme="vs-dark" />
+                      
                         {
                           error != null && error == false &&  <h1 style={{
                                 fontSize: 20,

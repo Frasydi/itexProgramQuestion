@@ -138,8 +138,8 @@ export class AdminService {
         message: "Berhasil Mengedit Soal"
       }
     } catch (err) {
+      console.log(err)
       if (err instanceof CustomHttpError) {
-
         throw new HttpException(err.message, err.status)
       }
 
@@ -222,6 +222,7 @@ export class AdminService {
         message: "Berhasil Menghapus User"
       }
     } catch (err) {
+      console.log(err)
       if (err instanceof CustomHttpError) {
 
         throw new HttpException(err.message, err.status)
