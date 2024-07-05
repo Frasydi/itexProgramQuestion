@@ -23,7 +23,7 @@ export default function Layout() {
             setUser(feting.data)
             console.log(feting.data)
 
-            if(/^\/admin*$/i.test(loc.pathname) == false) {
+            if(/^\/admin.*$/i.test(loc.pathname) == false) {
                 if (feting.data.role == 99) {
                     rout("/admin")
                 } 
