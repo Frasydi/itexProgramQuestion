@@ -16,6 +16,7 @@ export default function JawabSoal() {
         }[]
     }>("/user/soal/" + params.id)
     const [code, setCode] = useState("")
+    const [cleanCode, setCleanCode] = useState("")
     const [stdOut, setStdOut] = useState("")
     const [error, setError] = useState<boolean | null>(null)
     const [memory, setMemory] = useState<number | null>(null)
@@ -28,6 +29,7 @@ export default function JawabSoal() {
         setTime(null)
         setError(null)
         setLoading(true)
+        setCleanCode("")
         try {
             const feting = await apifetch.post("/user/code/" + data?.id, {
                 code: code
@@ -43,6 +45,7 @@ export default function JawabSoal() {
                 setStdOut(feting.data.stdout)
                 setMemory(feting.data.memoryUsage / 1024)
                 setTime(feting.data.cpuUsage)
+                setCleanCode(code)
             }
 
         } catch (err) {
@@ -58,7 +61,7 @@ export default function JawabSoal() {
         if (error == true) return
         try {
             const feting = await apifetch.post("/user/jawaban/" + params.id, {
-                code,
+                code : cleanCode,
                 waktu: time+"ms",
                 memori: memory,
             })
