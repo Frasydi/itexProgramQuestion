@@ -128,7 +128,9 @@ export default function JawabSoal() {
                         display: "flex",
                         flexDirection: "column"
                     }}>
-                        <CodeiumEditor value={code} onChange={(ev) => {
+                        <CodeiumEditor  options={{
+                            codeLens :false
+                        }} value={code} onChange={(ev) => {
                             setCode(ev || "")
                         }} height={"80vh"} language="java" theme="vs-dark" />
 
