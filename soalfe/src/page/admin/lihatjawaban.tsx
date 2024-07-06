@@ -21,6 +21,7 @@ export default function LihatJawaban() {
     const [stdOut, setStdOut] = useState("")
     const [error, setError] = useState<boolean | null>(null)
     const [memory, setMemory] = useState<number | null>(null)
+    const [time, setTime] = useState<string | null>(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [loading, setLoading] = useState(false)
     const cancelRef = useRef()
@@ -34,6 +35,7 @@ export default function LihatJawaban() {
             }
         }[], nama: string, soal: string, codeAwal: string
     }>("/admin/jawaban/" + params.id)
+
     useEffect(() => {
         console.log(data)
     }, [data])
@@ -42,6 +44,7 @@ export default function LihatJawaban() {
         setStdOut("")
         setError(null)
         setLoading(true)
+        setTime(null)
         try {
             const feting = await apifetch.post("/user/code/" + params.id, {
                 code: code
@@ -57,6 +60,7 @@ export default function LihatJawaban() {
                 setError(false)
                 setStdOut(feting.data.stdout)
                 setMemory(feting.data.memoryUsage / 1024)
+                setTime(feting.data.cpuUsage+"ms")
             }
             onOpen()
 
@@ -115,6 +119,7 @@ export default function LihatJawaban() {
                     setStdOut("")
                     setError(false)
                     setMemory(null)
+                    setTime(null)
                 }}
             >
                 <AlertDialogOverlay>
@@ -135,6 +140,9 @@ export default function LihatJawaban() {
                             <h3 style={{
                                 fontSize: 15
                             }}>Memori : {memory}KB</h3>
+                            <h3 style={{
+                                fontSize: 15
+                            }}>Waktu Eksekusi : {time}</h3>
 
                         </AlertDialogBody>
 
