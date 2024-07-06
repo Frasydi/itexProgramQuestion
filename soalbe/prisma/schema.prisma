@@ -35,6 +35,7 @@ model Jawaban {
   code String @db.LongText()
   waktu String @db.MediumText()
   memori Float 
+  tanggal DateTime @default(now())
   soal Soal @relation(fields: [soalId], references: [id], map: "soalrel", onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], map: "soaluser", onDelete: Cascade)
 

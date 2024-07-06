@@ -40,7 +40,7 @@ export class AdminService {
       if (soal == null) {
         throw new CustomHttpError("Tidak Menemukan Soal", HttpStatus.NOT_FOUND)
       }
-      
+
       return soal
     } catch (err) {
       if (err instanceof CustomHttpError) {
@@ -54,21 +54,25 @@ export class AdminService {
   async getSoalJawaban(soalId: number) {
     try {
       const soals = await prisma.soal.findFirst({
-        where : {
-          id : soalId,
+        where: {
+          id: soalId,
         },
-        include : {
-          jawabans : {
-            include : {
-              user : {
-                select : {
-                  username : true,
-                  id : true
+        include: {
+          jawabans: {
+            include: {
+              user: {
+                select: {
+                  username: true,
+                  id: true
                 }
               }
+            },
+            orderBy: {
+              tanggal: "asc"
             }
           }
-        }
+        },
+
       })
 
       return soals

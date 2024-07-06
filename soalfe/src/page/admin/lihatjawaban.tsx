@@ -32,7 +32,8 @@ export default function LihatJawaban() {
             memori: string,
             user: {
                 username: string
-            }
+            },
+            tanggal : string
         }[], nama: string, soal: string, codeAwal: string
     }>("/admin/jawaban/" + params.id)
 
@@ -99,6 +100,16 @@ export default function LihatJawaban() {
                             <h3 style={{
                                 fontSize: 15,
                             }}>Dari {el.user.username}</h3>
+                            <h3 style={{
+                                fontSize: 15,
+                            }}>Tanggal Selesai Dikerjakan : {new Date(el.tanggal).toLocaleTimeString("id-ID", {
+                                day : "numeric",
+                                month : "long",
+                                year :"numeric",
+                                hour :"numeric",
+                                minute :"numeric",
+                                second :"numeric"
+                            })}</h3>
                             <CodeiumEditor options={{
                                 readOnly: true
                             }} value={el.code} height={"70vh"} language="java" theme="vs-dark" />
