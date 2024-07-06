@@ -10,18 +10,22 @@ import { CodeiumEditor } from "@codeium/react-code-editor";
 
 export default function JawabSoal() {
     const params = useParams()
-    const [data, loading, error2, refetch] = useFetch<{ id: Number, nama: string, soal: string, codePenentu: string, jawabans : {
-        code : string
-    }[] }>("/user/soal/" + params.id)
+    const [data, loading, error2, refetch] = useFetch<{
+        id: Number, nama: string, soal: string, codePenentu: string, jawabans: {
+            code: string
+        }[]
+    }>("/user/soal/" + params.id)
     const [code, setCode] = useState("")
     const [stdOut, setStdOut] = useState("")
     const [error, setError] = useState<boolean | null>(null)
-    const [memory, setMemory]   = useState<number | null>(null)
+    const [memory, setMemory] = useState<number | null>(null)
     const [load, setLoading] = useState(false)
+    const [time, setTime] = useState(null)
     const nav = useNavigate()
     async function coding() {
         if (code.length == 0) return
         setStdOut("")
+        setTime(null)
         setError(null)
         setLoading(true)
         try {
@@ -30,17 +34,17 @@ export default function JawabSoal() {
             })
 
             console.log(feting.data)
-            
+
             if (feting.data.stderr.length > 0) {
                 setError(true)
-                console.log(feting.data.stderr)
                 setStdOut(feting.data.stdout + "\n" + feting.data.stderr)
             } else {
                 setError(false)
                 setStdOut(feting.data.stdout)
                 setMemory(feting.data.memoryUsage / 1024)
+                setTime(feting.data.cpuUsage)
             }
-            
+
         } catch (err) {
             console.log(err)
         }
@@ -49,14 +53,14 @@ export default function JawabSoal() {
 
     async function creatJawaban() {
         if (code.length == 0) return
-        if (memory == null) return 
-        if(error == null ) return
-        if(error == true) return
+        if (memory == null) return
+        if (error == null) return
+        if (error == true) return
         try {
-            const feting = await apifetch.post("/user/jawaban/"+params.id, {
+            const feting = await apifetch.post("/user/jawaban/" + params.id, {
                 code,
-                waktu : stdOut,
-                memori : memory,
+                waktu: time+"ms",
+                memori: memory,
             })
 
             if (feting.status >= 400) {
@@ -85,12 +89,12 @@ export default function JawabSoal() {
         }
     }
 
-    
+
 
     useEffect(() => {
         console.log(data)
         if (data == null) return
-        if(data.jawabans.length ==0) {
+        if (data.jawabans.length == 0) {
             setCode(data.codePenentu)
         } else {
             setCode(data.jawabans[0].code)
@@ -121,15 +125,22 @@ export default function JawabSoal() {
                         display: "flex",
                         flexDirection: "column"
                     }}>
-                         <CodeiumEditor value={code} onChange={(ev) => {
+                        <CodeiumEditor value={code} onChange={(ev) => {
                             setCode(ev || "")
                         }} height={"80vh"} language="java" theme="vs-dark" />
-                      
+
                         {
-                          error != null && error == false &&  <h1 style={{
-                                fontSize: 20,
-                                color :"green"
-                            }}>Penggunaan Memory : {memory} KB</h1>
+                            error != null && error == false &&
+                            <>
+                                <h1 style={{
+                                    fontSize: 20,
+                                    color: "green"
+                                }}>Penggunaan Memory : {memory} KB</h1>
+                                <h1 style={{
+                                    fontSize: 20,
+                                    color: "green"
+                                }}>Waktu Eksekusi : {time}ms</h1>
+                            </>
                         }
                         <div style={{
                             display: "flex",

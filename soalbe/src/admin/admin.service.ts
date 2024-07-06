@@ -36,9 +36,11 @@ export class AdminService {
           id: soalId
         }
       })
+
       if (soal == null) {
         throw new CustomHttpError("Tidak Menemukan Soal", HttpStatus.NOT_FOUND)
       }
+      
       return soal
     } catch (err) {
       if (err instanceof CustomHttpError) {
