@@ -51,6 +51,27 @@ export class AdminService {
     }
   }
 
+  async getSoalCodePenentu(id:number) {
+    try {
+      const data = await prisma.soal.findFirst({
+        where : {
+          id 
+        },
+        select : {
+          codeAwal : true
+        }
+      })
+      if(data == null) throw new CustomHttpError("Tidak Menemukan Data", HttpStatus.NOT_FOUND)
+        return data.codeAwal
+      }catch(err) {
+      if (err instanceof CustomHttpError) {
+        throw new HttpException(err.message, err.status)
+      }
+      throw new HttpException("Ada Masalah", HttpStatus.NOT_FOUND)
+
+    }
+  }
+  
   async getSoalJawaban(soalId: number) {
     try {
       const soals = await prisma.soal.findFirst({

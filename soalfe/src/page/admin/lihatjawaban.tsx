@@ -47,7 +47,7 @@ export default function LihatJawaban() {
         setLoading(true)
         setTime(null)
         try {
-            const feting = await apifetch.post("/user/code/" + params.id, {
+            const feting = await apifetch.post("/admin/code/" + params.id, {
                 code: code
             })
 
