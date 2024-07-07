@@ -128,12 +128,21 @@ export default function JawabSoal() {
                         display: "flex",
                         flexDirection: "column"
                     }}>
-                        <CodeiumEditor  options={{
-                            codeLens :false
+                        {/* <CodeiumEditor  options={{
+                            codeLens :false,
+                            codeLensFontSize :0,
+                            colorDecoratorsActivatedOn : "hover",
+                            
+                            
                         }} value={code} onChange={(ev) => {
                             setCode(ev || "")
-                        }} height={"80vh"} language="java" theme="vs-dark" />
-
+                        }} height={"80vh"} language="java" theme="vs-dark" /> */}
+                        <Textarea  value={code} onChange={(ev) => {
+                            setCode(ev.target.value || "")
+                        }} height={"80vh"} style={{
+                            backgroundColor :"black",
+                            color :"white"
+                        }} />
                         {
                             error != null && error == false &&
                             <>
