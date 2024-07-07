@@ -64,7 +64,7 @@ const Login = () => {
         alignItems="center"
       >
         <Avatar bg="teal.500" />
-        <Heading color="teal.400">Lomba ITEX</Heading>
+        <Heading color="teal.400">Selamat Datang Peserta ITEX</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={(ev) => {
             ev.preventDefault()
