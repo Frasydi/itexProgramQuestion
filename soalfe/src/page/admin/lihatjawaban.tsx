@@ -53,15 +53,15 @@ export default function LihatJawaban() {
 
             console.log(feting.data)
 
-            if (feting.data.stderr.length > 0) {
+            if (feting.data.stderr != null) {
                 setError(true)
                 console.log(feting.data.stderr)
                 setStdOut(feting.data.stdout + "\n" + feting.data.stderr)
             } else {
                 setError(false)
                 setStdOut(feting.data.stdout)
-                setMemory(feting.data.memoryUsage / 1024)
-                setTime(feting.data.cpuUsage+"ms")
+                setMemory(feting.data.memory / 1024)
+                setTime(feting.data.waktu+"ms")
             }
             onOpen()
 
